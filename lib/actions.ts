@@ -7,6 +7,7 @@ import {
   onboardingSchema,
   aboutSettingsSchema,
   EventTypeServerSchema,
+  eventTypeSchema,
 } from '@/utils/schema';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
@@ -187,7 +188,7 @@ export async function CreateEventTypeAction(
   return redirect('/dashboard');
 }
 
-export async function CreateMeetingAction(formData: FormData) {
+export async function createMeetingAction(formData: FormData) {
   const getUserData = await prisma.user.findUnique({
     where: { username: formData.get('username') as string },
     select: { grantEmail: true, grantId: true },
@@ -235,4 +236,48 @@ export async function CreateMeetingAction(formData: FormData) {
     },
   });
   return redirect('/success');
+}
+
+export async function cancelMeetingAction(formData: FormData) {
+  const session = await requireUser();
+
+  const userData = await prisma.user.findUnique({
+    where: { id: session.user?.id },
+    select: { grantEmail: true, grantId: true },
+  });
+
+  if (!userData) {
+    throw new Error('User not found');
+  }
+
+  const data = await nylas.events.destroy({
+    eventId: formData.get('eventId') as string,
+    identifier: userData.grantId as string,
+    queryParams: { calendarId: userData.grantEmail as string },
+  });
+
+  revalidatePath('/dashboard/meetings');
+}
+
+export async function EditEventTypeAction(prevData: any, formData: FormData) {
+  const session = await requireUser();
+
+  const submission = parseWithZod(formData, { schema: eventTypeSchema });
+
+  if (submission.status !== 'success') {
+    return submission.reply();
+  }
+
+  const data = await prisma.eventType.update({
+    where: { id: formData.get('id') as string, userId: session.user?.id },
+    data: {
+      title: submission.value.title,
+      duration: submission.value.duration,
+      url: submission.value.url,
+      description: submission.value.description,
+      videoCallSoftware: submission.value.videoCallSoftware,
+    },
+  });
+
+  return redirect('/dashboard');
 }

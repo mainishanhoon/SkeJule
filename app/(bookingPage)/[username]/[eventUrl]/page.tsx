@@ -1,4 +1,4 @@
-import { CreateMeetingAction } from '@/lib/actions';
+import { createMeetingAction } from '@/lib/actions';
 import { RenderCalendar } from '@/components/calendar/RenderCalendar';
 import { SubmitButton } from '@/components/Buttons';
 import { TimeSlots } from '@/components/dashboard/TimeSlots';
@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import React from 'react';
 import Form from 'next/form';
+import PageContainer from '@/components/PageContainer';
 
 async function getData(username: string, eventUrl: string) {
   const data = await prisma.eventType.findFirst({
@@ -73,139 +74,157 @@ export default async function BookingFormRoute({
   const showForm = !!searchParams.date && !!searchParams.time;
 
   return (
-    <div className="flex min-h-screen w-screen items-center justify-center">
-      {showForm ? (
-        <Card className="max-w-2xl">
-          <CardContent className="grid gap-4 p-5 md:grid-cols-[1fr,auto,1fr]">
-            <div>
-              <Image
-                src={data.user?.image as string}
-                alt={`${data.user.name}'s profile picture`}
-                className="size-9 rounded-full"
-                width={75}
-                height={75}
+    <PageContainer>
+      <div className="flex min-h-screen w-screen items-center justify-center">
+        {showForm ? (
+          <Card className="">
+            <CardContent className="grid gap-4 p-5 md:grid-cols-[1fr,auto,1fr]">
+              <div>
+                <Image
+                  src={data.user?.image as string}
+                  alt={`${data.user.name}'s profile picture`}
+                  className="size-9 rounded-full"
+                  width={75}
+                  height={75}
+                />
+                <p className="mt-1 text-lg font-bold text-muted-foreground">
+                  {data.user.name}
+                </p>
+                <h1 className="mt-2 text-xl font-bold">{data.title}</h1>
+                <p className="font-font text-sm text-muted-foreground">
+                  {data.description}
+                </p>
+
+                <div className="mt-5 grid gap-y-3">
+                  <p className="flex items-center">
+                    <CalendarX2 className="mr-2 size-4 text-primary" />
+                    <span className="text-sm font-medium text-muted-foreground">
+                      {formattedDate}
+                    </span>
+                  </p>
+                  <p className="flex items-center">
+                    <Clock className="mr-2 size-4 text-primary" />
+                    <span className="text-sm font-medium text-muted-foreground">
+                      {data.duration} Mins
+                    </span>
+                  </p>
+                  <p className="flex items-center">
+                    <BookMarked className="mr-2 size-4 text-primary" />
+                    <span className="text-sm font-medium text-muted-foreground">
+                      {data.videoCallSoftware}
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <Separator
+                orientation="vertical"
+                className="hidden h-full w-[1px] md:block"
               />
-              <p className="mt-1 text-md font-bold text-muted-foreground">
-                {data.user.name}
-              </p>
-              <h1 className="mt-2 text-xl font-bold">{data.title}</h1>
-              <p className="text-sm font-font text-muted-foreground">
-                {data.description}
-              </p>
 
-              <div className="mt-5 grid gap-y-3">
-                <p className="flex items-center">
-                  <CalendarX2 className="mr-2 size-4 text-primary" />
-                  <span className="text-sm font-medium text-muted-foreground">
-                    {formattedDate}
-                  </span>
+              <Form
+                className="flex flex-col gap-y-4"
+                action={createMeetingAction}
+              >
+                <input
+                  type="hidden"
+                  name="fromTime"
+                  value={searchParams.time}
+                />
+                <input
+                  type="hidden"
+                  name="eventDate"
+                  value={searchParams.date}
+                />
+                <input
+                  type="hidden"
+                  name="meetingLength"
+                  value={data.duration}
+                />
+                <input
+                  type="hidden"
+                  name="provider"
+                  value={data.videoCallSoftware}
+                />
+                <input type="hidden" name="username" value={params.username} />
+                <input type="hidden" name="eventTypeId" value={data.id} />
+
+                <div className="flex flex-col gap-y-1">
+                  <Label>Your Name</Label>
+                  <Input name="name" placeholder="Your Name" />
+                </div>
+
+                <div className="flex flex-col gap-y-1">
+                  <Label>Your Email</Label>
+                  <Input name="email" placeholder="loremipsum@email.com" />
+                </div>
+
+                <SubmitButton text="Book Meeting" />
+              </Form>
+            </CardContent>
+          </Card>
+        ) : (
+          <Card className="mx-auto w-full max-w-[1000px]">
+            <CardContent className="p-5 md:grid md:grid-cols-[1fr,auto,1fr,auto,1fr] md:gap-4">
+              <div>
+                <Image
+                  src={data.user.image as string}
+                  alt={`${data.user.name}'s profile picture`}
+                  className="size-9 rounded-full"
+                  width={30}
+                  height={30}
+                />
+                <p className="mt-1 text-sm font-medium text-muted-foreground">
+                  {data.user.name}
                 </p>
-                <p className="flex items-center">
-                  <Clock className="mr-2 size-4 text-primary" />
-                  <span className="text-sm font-medium text-muted-foreground">
-                    {data.duration} Mins
-                  </span>
+                <h1 className="mt-2 text-xl font-semibold">{data.title}</h1>
+                <p className="text-sm font-medium text-muted-foreground">
+                  {data.description}
                 </p>
-                <p className="flex items-center">
-                  <BookMarked className="mr-2 size-4 text-primary" />
-                  <span className="text-sm font-medium text-muted-foreground">
-                    {data.videoCallSoftware}
-                  </span>
-                </p>
-              </div>
-            </div>
-            <Separator
-              orientation="vertical"
-              className="hidden h-full w-[1px] md:block"
-            />
-
-            <Form
-              className="flex flex-col gap-y-4"
-              action={CreateMeetingAction}
-            >
-              <input type="hidden" name="fromTime" value={searchParams.time} />
-              <input type="hidden" name="eventDate" value={searchParams.date} />
-              <input type="hidden" name="meetingLength" value={data.duration} />
-              <input type="hidden" name="provider" value={data.videoCallSoftware} />
-              <input type="hidden" name="username" value={params.username} />
-              <input type="hidden" name="eventTypeId" value={data.id} />
-
-              <div className="flex flex-col gap-y-1">
-                <Label>Your Name</Label>
-                <Input name="name" placeholder="Your Name" />
+                <div className="mt-5 grid gap-y-3">
+                  <p className="flex items-center">
+                    <CalendarX2 className="mr-2 size-4 text-primary" />
+                    <span className="text-sm font-medium text-muted-foreground">
+                      {formattedDate}
+                    </span>
+                  </p>
+                  <p className="flex items-center">
+                    <Clock className="mr-2 size-4 text-primary" />
+                    <span className="text-sm font-medium text-muted-foreground">
+                      {data.duration} Mins
+                    </span>
+                  </p>
+                  <p className="flex items-center">
+                    <BookMarked className="mr-2 size-4 text-primary" />
+                    <span className="text-sm font-medium text-muted-foreground">
+                      Google Meet
+                    </span>
+                  </p>
+                </div>
               </div>
 
-              <div className="flex flex-col gap-y-1">
-                <Label>Your Email</Label>
-                <Input name="email" placeholder="loremipsum@email.com" />
-              </div>
-
-              <SubmitButton text="Book Meeting" />
-            </Form>
-          </CardContent>
-        </Card>
-      ) : (
-        <Card className="mx-auto w-full max-w-[1000px]">
-          <CardContent className="p-5 md:grid md:grid-cols-[1fr,auto,1fr,auto,1fr] md:gap-4">
-            <div>
-              <Image
-                src={data.user.image as string}
-                alt={`${data.user.name}'s profile picture`}
-                className="size-9 rounded-full"
-                width={30}
-                height={30}
+              <Separator
+                orientation="vertical"
+                className="hidden h-full w-[1px] md:block"
               />
-              <p className="mt-1 text-sm font-medium text-muted-foreground">
-                {data.user.name}
-              </p>
-              <h1 className="mt-2 text-xl font-semibold">{data.title}</h1>
-              <p className="text-sm font-medium text-muted-foreground">
-                {data.description}
-              </p>
-              <div className="mt-5 grid gap-y-3">
-                <p className="flex items-center">
-                  <CalendarX2 className="mr-2 size-4 text-primary" />
-                  <span className="text-sm font-medium text-muted-foreground">
-                    {formattedDate}
-                  </span>
-                </p>
-                <p className="flex items-center">
-                  <Clock className="mr-2 size-4 text-primary" />
-                  <span className="text-sm font-medium text-muted-foreground">
-                    {data.duration} Mins
-                  </span>
-                </p>
-                <p className="flex items-center">
-                  <BookMarked className="mr-2 size-4 text-primary" />
-                  <span className="text-sm font-medium text-muted-foreground">
-                    Google Meet
-                  </span>
-                </p>
+
+              <div className="my-4 md:my-0">
+                <RenderCalendar availablility={data.user.Availability} />
               </div>
-            </div>
 
-            <Separator
-              orientation="vertical"
-              className="hidden h-full w-[1px] md:block"
-            />
+              <Separator
+                orientation="vertical"
+                className="hidden h-full w-[1px] md:block"
+              />
 
-            <div className="my-4 md:my-0">
-              <RenderCalendar availablility={data.user.Availability} />
-            </div>
-
-            <Separator
-              orientation="vertical"
-              className="hidden h-full w-[1px] md:block"
-            />
-
-            <TimeSlots
-              selectedDate={selectedDate}
-              username={params.username}
-              meetingDuration={data.duration}
-            />
-          </CardContent>
-        </Card>
-      )}
-    </div>
+              <TimeSlots
+                selectedDate={selectedDate}
+                username={params.username}
+                meetingDuration={data.duration}
+              />
+            </CardContent>
+          </Card>
+        )}
+      </div>
+    </PageContainer>
   );
 }
