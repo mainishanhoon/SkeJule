@@ -1,5 +1,5 @@
 import Header from '@/components/Header';
-import { DashboardMenu } from '@/components/NavBar';
+import DashboardMenu from '@/components/NavBar';
 import PageContainer from '@/components/PageContainer';
 import requireUser from '@/lib/hooks';
 import { CalendarDays } from 'lucide-react';
@@ -39,7 +39,7 @@ export default async function DashboardLayout({
   const data = await getData(session.user?.id as string);
 
   return (
-    <section className="grid min-h-screen min-w-full md:grid-cols-[210px_1fr]">
+    <section className="grid min-h-screen min-w-full md:grid-cols-[260px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-2 lg:h-[60px]">
@@ -51,9 +51,11 @@ export default async function DashboardLayout({
                 size={35}
                 className="rounded-sm bg-primary p-1.5 text-white"
               />
-              <p className="tracking-wider">
+              <p className="font-bold tracking-wider">
                 Ske
-                <span className="tracking-normal text-primary">Jule</span>
+                <span className="font-bold tracking-normal text-primary">
+                  Jule
+                </span>
               </p>
             </Link>
           </div>

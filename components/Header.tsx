@@ -1,5 +1,5 @@
-import { CalendarDays, LogOut, MessageSquareText } from 'lucide-react';
-import ThemeToggle from '@/components/ThemeToggle';
+import { CalendarDays } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeSwitcher';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -7,7 +7,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { DashboardMenu } from '@/components/NavBar';
+import DashboardMenu from '@/components/NavBar';
 import Link from 'next/link';
 import UserInfo from '@/components/auth/UserInfo';
 
@@ -33,9 +33,9 @@ export default function Header() {
                 size={35}
                 className="rounded-sm bg-primary p-1 text-white"
               />
-              <p className="tracking-wide">
+              <p className="font-bold tracking-wider font-prompt">
                 Ske
-                <span className="tracking-normal text-primary">Jule</span>
+                <span className="tracking-wider text-primary">Jule</span>
               </p>
             </Link>
           </SheetTitle>
@@ -46,7 +46,6 @@ export default function Header() {
       </Sheet>
 
       <div className="ml-auto flex items-center gap-x-5">
-
         <ThemeToggle />
 
         <UserInfo />

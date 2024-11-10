@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { NavigationLinks } from '@/constants/navItems';
 
-export function DashboardMenu() {
+export default function DashboardMenu() {
   const pathname = usePathname();
   return (
     <>
@@ -17,7 +17,7 @@ export function DashboardMenu() {
             pathname == label.href
               ? 'bg-primary/20 text-primary'
               : 'bg-muted/50 text-muted-foreground hover:text-foreground/5',
-            'mt-1 flex items-center gap-2 rounded-lg px-4 py-1.5 text-lg font-bold tracking-wide transition-all hover:text-primary/70',
+            'mt-1 flex items-center gap-2 rounded-lg px-7 py-1.5 text-lg font-bold tracking-wide transition-all hover:text-primary/50',
           )}
         >
           <label.icon size={30} strokeWidth={2.5} />

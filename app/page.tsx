@@ -1,5 +1,5 @@
 import AuthModal from '@/components/auth/AuthDialog';
-import ThemeToggle from '@/components/ThemeToggle';
+import ThemeToggle from '@/components/ThemeSwitcher';
 import { Button } from '@/components/ui/button';
 import { auth } from '@/lib/auth';
 import { CalendarDays } from 'lucide-react';

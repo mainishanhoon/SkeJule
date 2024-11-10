@@ -3,22 +3,22 @@ import { CalendarCog, CalendarRange, Cog, UsersRound } from 'lucide-react';
 export const NavigationLinks = [
   {
     name: 'Event Types',
-    href: '/events',
+    href: '/dashboard',
     icon: CalendarCog,
   },
   {
     name: 'Meetings',
-    href: '/meetings',
+    href: '/dashboard/meetings',
     icon: UsersRound,
   },
   {
     name: 'Availability',
-    href: '/availability',
+    href: '/dashboard/availability',
     icon: CalendarRange,
   },
   {
     name: 'Settings',
-    href: '/settings',
+    href: '/dashboard/settings',
     icon: Cog,
   },
 ];

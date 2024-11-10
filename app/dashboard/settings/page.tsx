@@ -2,7 +2,6 @@ import SettingsForm from '@/components/forms/SettingsForm';
 
 import prisma from '@/lib/db';
 import requireUser from '@/lib/hooks';
-
 import { notFound } from 'next/navigation';
 import React from 'react';
 
@@ -27,7 +26,7 @@ async function getData(id: string) {
 
 export default async function SettingsPage() {
   const session = await requireUser();
-  
+
   const data = await getData(session.user?.id as string);
 
   return (

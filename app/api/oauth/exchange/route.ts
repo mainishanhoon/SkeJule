@@ -1,5 +1,5 @@
 import prisma from '@/lib/db';
-import { requireUser } from '@/lib/hooks';
+import requireUser from '@/lib/hooks';
 import { nylas, nylasConfig } from '@/lib/nylas';
 import { redirect } from 'next/navigation';
 import { NextRequest } from 'next/server';

@@ -14,9 +14,19 @@ import { signOut } from '@/lib/auth';
 import Form from 'next/form';
 import requireUser from '@/lib/hooks';
 import { LogOut } from 'lucide-react';
+import prisma from '@/lib/db';
+
+async function getUserName(userId: string | undefined) {
+  const user = await prisma.user.findFirst({
+    where: { id: userId },
+    select: { username: true },
+  });
+  return user?.username;
+}
 
 export default async function UserInfo() {
   const session = await requireUser();
+  const username = await getUserName(session.user?.id);
 
   return (
     <>
@@ -25,7 +35,7 @@ export default async function UserInfo() {
           {session?.user?.name}
         </p>
         <p className="text-right text-sm text-muted-foreground">
-          Drug Researcher
+          {username}
         </p>
       </Label>
       <DropdownMenu>

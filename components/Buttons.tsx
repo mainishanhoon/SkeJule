@@ -57,7 +57,7 @@ export function SubmitButton({ text, variant, className }: ButtonProps) {
         <Button
           type="submit"
           variant={variant}
-          className={cn('w-fit', className)}
+          className={cn('w-fit tracking-wider', className)}
         >
           {text}
         </Button>

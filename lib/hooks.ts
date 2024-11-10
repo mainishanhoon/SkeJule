@@ -5,7 +5,7 @@ export default async function requireUser() {
   const session = await auth();
 
   if (!session?.user) {
-    return redirect('/');
+    return redirect('/onboarding');
   }
 
   return session;
