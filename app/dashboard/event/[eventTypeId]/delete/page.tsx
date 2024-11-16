@@ -15,7 +15,7 @@ import { SubmitButton } from '@/components/Buttons';
 export default async function DeleteEventType({
   params,
 }: {
-  params: { eventTypeId: string };
+  params: Promise<{ eventTypeId: string }>;
 }) {
   const resolvedParams = await params;
 

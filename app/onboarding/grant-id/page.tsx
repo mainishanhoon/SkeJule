@@ -16,7 +16,7 @@ export default function OnboardingRouteTwo() {
       <Card className="max-w-xl">
         <CardHeader>
           <CardTitle className="text-3xl font-bold tracking-wider">
-            You're almost Done!
+            You&apos;re almost Done!
           </CardTitle>
           <CardDescription className="text-md font-bold tracking-wider">
             We have to now connect your calendar to your account.

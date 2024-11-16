@@ -24,12 +24,14 @@ async function getData(eventTypeId: string) {
 
   return data;
 }
-const EditEventTypePage = async ({
+export default async function EditEventTypePage({
   params,
 }: {
-  params: { eventTypeId: string };
-}) => {
-  const data = await getData(params.eventTypeId);
+  params: Promise<{ eventTypeId: string }>;
+}){
+    const resolvedParams = await params;
+
+  const data = await getData(resolvedParams.eventTypeId);
 
   return (
     <EditEventTypeForm
@@ -43,5 +45,3 @@ const EditEventTypePage = async ({
     />
   );
 };
-
-export default EditEventTypePage;
