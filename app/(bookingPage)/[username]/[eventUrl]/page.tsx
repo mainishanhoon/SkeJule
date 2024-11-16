@@ -5,7 +5,6 @@ import { TimeSlots } from '@/components/dashboard/TimeSlots';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
 import prisma from '@/lib/db';
 import { BookMarked, CalendarX2, Clock } from 'lucide-react';
 import Image from 'next/image';
@@ -57,8 +56,8 @@ export default async function BookingFormRoute({
   params,
   searchParams,
 }: {
-  params: { username: string; eventUrl: string };
-  searchParams: { date?: string; time?: string };
+  params: Promise<{ username: string; eventUrl: string }>;
+  searchParams: Promise<{ date?: string; time?: string }>;
 }) {
   const resolvedParams = await params;
   const resolvedSearchParams = await searchParams;
@@ -126,7 +125,7 @@ export default async function BookingFormRoute({
             </Card>
             <Card>
               <CardContent className="p-6">
-                <form className="grid gap-4" action={createMeetingAction}>
+                <Form className="grid gap-4" action={createMeetingAction}>
                   <input
                     type="hidden"
                     name="fromTime"
@@ -176,7 +175,7 @@ export default async function BookingFormRoute({
                   </div>
 
                   <SubmitButton text="Book Meeting" />
-                </form>
+                </Form>
               </CardContent>
             </Card>
           </div>

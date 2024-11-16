@@ -71,10 +71,13 @@ export default async function MeetingsPage() {
                 <div className="grid grid-cols-3 items-center justify-between">
                   <div>
                     <p className="text-sm text-muted-foreground">
+                      {/*@ts-ignore*/}
                       {format(fromUnixTime(item.when.startTime), 'EEE, dd MMM')}
                     </p>
                     <p className="pt-1 text-xs text-muted-foreground">
+                      {/*@ts-ignore*/}
                       {format(fromUnixTime(item.when.startTime), 'hh:mm a')} -{' '}
+                      {/*@ts-ignore*/}
                       {format(fromUnixTime(item.when.endTime), 'hh:mm a')}
                     </p>
                     <div className="mt-1 flex items-center">
@@ -82,6 +85,7 @@ export default async function MeetingsPage() {
                       <a
                         className="text-xs text-primary underline underline-offset-4"
                         target="_blank"
+                        //@ts-ignore
                         href={item.conferencing.provider.url}
                       >
                         Join Meeting
