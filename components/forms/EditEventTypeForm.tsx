@@ -29,6 +29,7 @@ import {
 } from '@/components/ui/select';
 import { ButtonGroup } from '@/components/dashboard/ButtonGroup';
 import { useActionState, useState } from 'react';
+import Form from 'next/form';
 
 interface iAppProps {
   id: string;
@@ -79,7 +80,7 @@ export function EditEventTypeForm({
             Create a new appointment type that allows people to book times.
           </CardDescription>
         </CardHeader>
-        <form noValidate id={form.id} onSubmit={form.onSubmit} action={action}>
+        <Form noValidate id={form.id} onSubmit={form.onSubmit} action={action}>
           <input type="hidden" name="id" value={id} />
           <CardContent className="grid gap-y-5">
             <div className="flex flex-col gap-y-2">
@@ -96,7 +97,7 @@ export function EditEventTypeForm({
             <div className="grid gap-y-2">
               <Label>Url</Label>
               <div className="flex rounded-md">
-                <span className="inline-flex items-center rounded-l-md border border-r-0 border-muted bg-muted px-3 text-sm text-muted-foreground">
+                <span className="inline-flex items-center rounded-l-md border-2 border-muted-foreground/50 bg-muted px-3 text-sm text-muted-foreground">
                   SkeJule.com/
                 </span>
                 <Input
@@ -202,7 +203,7 @@ export function EditEventTypeForm({
             </Button>
             <SubmitButton text="Save Changes" />
           </CardFooter>
-        </form>
+        </Form>
       </Card>
     </div>
   );
