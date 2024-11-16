@@ -137,27 +137,30 @@ export async function TimeSlots({
 
   return (
     <div>
-      <p className="text-base font-semibold">
-        {format(selectedDate, 'EEE')}.
-        <span className="text-sm text-muted-foreground">
-          {format(selectedDate, 'MMM. d')}
+      <p className="text-base font-bold">
+        {format(selectedDate, 'EEE')} :
+        <span className="text-base font-bold text-muted-foreground">
+          {format(selectedDate, ' MMM - d')}
         </span>
       </p>
-      <ScrollArea className="bg-muted-foreground/50 pr-4">
-        <div className="mt-3 max-h-[350px]">
+      <ScrollArea className="pr-4 mt-4">
+        <div className="h-[350px]">
           {availableSlots.length > 0 ? (
             availableSlots.map((slot, index) => (
               <Link
                 key={index}
                 href={`?date=${format(selectedDate, 'yyyy-MM-dd')}&time=${slot}`}
               >
-                <Button variant="outline" className="mb-2 w-full">
+                <Button
+                  variant="outline"
+                  className="mb-2 w-full hover:text-background hover:bg-muted-foreground"
+                >
                   {slot}
                 </Button>
               </Link>
             ))
           ) : (
-            <p>No available time slots for this date.</p>
+            <p className="font-bold bg-background rounded-sm p-2">No available time slots for this date.</p>
           )}
         </div>
       </ScrollArea>

@@ -1,4 +1,5 @@
 import CopyLinkMenuItem from '@/components/dashboard/CopyLinkMenuItem';
+import { MenuActiveSwitch } from '@/components/dashboard/EventTypeSwitcher';
 import EmptyState from '@/components/EmptyState';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -140,6 +141,10 @@ export default async function EventPage() {
                 </div>
               </Link>
               <div className="flex items-center justify-between bg-gray-300 px-5 py-3 dark:bg-gray-900 dark:bg-muted-foreground/50">
+                <MenuActiveSwitch
+                  initialChecked={item.active}
+                  eventTypeId={item.id}
+                />
                 <Link href={`/dashboard/event/${item.id}`}>
                   <Button className="tracking-wider">Edit Event</Button>
                 </Link>

@@ -128,7 +128,9 @@ export default function CreateNewEvent() {
                 </SelectContent>
               </Select>
 
-              <p className="text-sm text-destructive">{fields.duration.errors}</p>
+              <p className="text-sm text-destructive">
+                {fields.duration.errors}
+              </p>
             </div>
 
             <div className="grid gap-y-2">
@@ -180,7 +182,7 @@ export default function CreateNewEvent() {
           </CardContent>
           <CardFooter className="flex w-full justify-between">
             <Button asChild variant="destructive">
-              <Link href="/dashboard/new" className="tracking-wider">
+              <Link href="/dashboard" className="tracking-wider">
                 Cancel
               </Link>
             </Button>
